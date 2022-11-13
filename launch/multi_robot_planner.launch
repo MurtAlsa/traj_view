@@ -1,0 +1,8 @@
+<launch>
+    <node pkg="traj_view" type="multi_agent_cntrl_node_vo.py" name="trajViewer"  output="screen">
+        <rosparam param="radius">0.4</rosparam>
+        <rosparam param="roomba20">[[0, 0], [0, 1.5], [1, 1.5], [1, 0], [2, 0], [2, 0]]</rosparam>
+        <rosparam param="roomba21">[[2, 0], [2, 1.5], [1, 1.5], [1, 0], [0, 0], [0, 0]]</rosparam>
+        <rosparam param="goal_topics">['/move_base_simple/goal20', '/move_base_simple/goal21']</rosparam>
+    </node>
+</launch>

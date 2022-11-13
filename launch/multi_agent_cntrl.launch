@@ -1,0 +1,42 @@
+<launch>
+
+    <node pkg="tf" type="static_transform_publisher" name="odom_tf" args="0 0 0 0 0 0 1  /map /odom  1000"/>
+    <node pkg="tf" type="static_transform_publisher" name="baselink_tf" args="0 0 0 0 0 0 1 /map /base_link  1000"/>
+    <node pkg="traj_view" type="sensor_reader.py" name="sernsor_reader"/>
+    <group ns="roomba20">
+        <node pkg="traj_view" type="roomba_controller.py" name="trajController20" >
+            <rosparam param="name">"roomba20"</rosparam>
+            <rosparam param="action_topic">"/move_base_simple/goal20"</rosparam>
+            <rosparam param="init_pos">[0.245, -0.245, 0]</rosparam>
+        </node>
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_roomba20" clear_params="true">
+            <rosparam command="load" file="$(find traj_view)/config/ekf_roomba20.yaml" />
+            <remap from="odometry/filtered" to="roomba20/filtered/odometry"/>
+        </node>
+    </group>
+
+    <group ns="roomba21">
+        <node pkg="traj_view" type="roomba_controller.py" name="trajController21" >
+            <rosparam param="name">"roomba21"</rosparam>
+            <rosparam param="action_topic">"/move_base_simple/goal21"</rosparam>
+            <rosparam param="init_pos">[0.245, -1.85, 0]</rosparam>
+        </node>
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_roomba21" clear_params="true" >
+            <rosparam command="load" file="$(find traj_view)/config/ekf_roomba21.yaml" />
+            <remap from="odometry/filtered" to="roomba21/filtered/odometry"/>
+        </node>
+    </group>
+
+
+
+    <node pkg="map_server" type="map_server" args="/home/robo/catkin_roomba/src/BoVo/config/mymap.yaml" name="mapserver" />
+    <node pkg="rviz" type="rviz" name="roomba_rviz" args="-d /home/robo/catkin_roomba/src/BoVo/config/multi_agent_traz_top.rviz" />
+
+    <node pkg="traj_view" type="multi_agent_cntrl_node.py" name="trajViewer"  output="screen">
+        <rosparam param="radius">0.4</rosparam>
+        <rosparam param="robot20">[[0.245, -0.245], [1.5, 0], [1.5, -1], [0, -1], [0, -2], [0, -2]]</rosparam>
+        <rosparam param="robot21">[[0.245, -1.85], [1.5, -2], [1.5, -1], [0, -1], [0, 0], [0, 0]]</rosparam>
+        <rosparam param="goal_topics">['/move_base_simple/goal20', '/move_base_simple/goal21']</rosparam>
+    </node>
+
+</launch>

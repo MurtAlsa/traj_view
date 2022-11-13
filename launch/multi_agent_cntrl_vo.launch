@@ -1,0 +1,29 @@
+<launch>
+    <include file="$(find traj_view)/launch/apriltag_coordinates.launch" />
+    <!-- <node pkg="traj_view" type="sensor_reader.py" name="sernsor_reader"/> -->
+
+    <group ns="roomba20">
+
+        <node pkg="traj_view" type="roomba_controller.py" name="trajController20" >
+            <rosparam param="name">"roomba20"</rosparam>
+            <rosparam param="action_topic">"/move_base_simple/goal20"</rosparam>
+            <rosparam param="init_pos">[0, 0, 0]</rosparam>
+        </node>
+    </group>
+
+    <group ns="roomba21">
+        <node pkg="traj_view" type="roomba_controller.py" name="trajController21" >
+            <rosparam param="name">"roomba21"</rosparam>
+            <rosparam param="action_topic">"/move_base_simple/goal21"</rosparam>
+            <rosparam param="init_pos">[2, 0, 0]</rosparam>
+        </node>
+    </group>
+
+
+
+    <!-- <node pkg="map_server" type="map_server" args="/home/robo/catkin_roomba/src/BoVo/config/mymap.yaml" name="mapserver" /> -->
+    <node pkg="rviz" type="rviz" name="roomba_rviz2" args="-d /home/robo/catkin_roomba/src/BoVo/config/multi_agent_traz_top.rviz" />
+
+
+
+</launch>

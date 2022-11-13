@@ -1,0 +1,23 @@
+<launch>
+    <node pkg="tf" type="static_transform_publisher" name="odom_broadcaster" args="0 0 0 -3.14 3.14 3.14 map odom 1" />
+    <!-- x y z yaw pitch roll -->
+    <node pkg="tf" type="static_transform_publisher" name="map_cam" args="1.218 -0.181 3.201 -3.1319 -0.033 -2.4684 camera map 1" />
+    <include file="$(find roomba_state_estimator)/launch/usb_cam-apriltag.launch" />
+    <include file="$(find roomba_state_estimator)/launch/roomba_continuous_detection.launch" />
+   <node pkg="rviz" type="rviz" name="roomba_rviz" args="-d /home/robo/catkin_roomba/src/BoVo/config/multi_agent_traz_top.rviz" />
+
+    <group ns="roomba20">
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_roomba20" clear_params="true">
+            <rosparam command="load" file="$(find traj_view)/config/ekf_roomba20.yaml" />
+            <remap from="odometry/filtered" to="odometry/filtered"/>
+        </node>
+    </group>
+
+
+    <group ns="roomba21">
+        <node pkg="robot_localization" type="ekf_localization_node" name="ekf_roomba21" clear_params="true" >
+            <rosparam command="load" file="$(find traj_view)/config/ekf_roomba21.yaml" />
+            <remap from="odometry/filtered" to="odometry/filtered"/>
+        </node>
+    </group>
+</launch>

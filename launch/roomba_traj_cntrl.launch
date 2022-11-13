@@ -1,0 +1,14 @@
+<launch>
+    <node pkg="traj_view" type="traj_view_node.py" name="trajViewer" >
+        <rosparam param="path">[[0, 0], [1.75, 0], [1.75, -1], [0, -1], [0, -2], [1.75, -2], [1.75, -1], [0, -1], [0, 0]]</rosparam>
+        <rosparam param="iteration">4</rosparam>
+        <rosparam param="loop_time">0.5</rosparam>
+    </node>
+    <node pkg="traj_view" type="roomba_controller.py" name="trajController" >
+        <rosparam param="name">"roomba20"</rosparam>
+        <rosparam param="action_topic">"/move_base_simple/goal"</rosparam>
+        <rosparam param="init_pos">[0, 0, 0]</rosparam>
+    </node>
+    <node pkg="map_server" type="map_server" args="/home/robo/catkin_roomba/src/BoVo/config/mymap.yaml" name="mapserver" />
+    <node pkg="rviz" type="rviz" name="roomba_rviz" args="-d /home/robo/catkin_roomba/src/BoVo/config/roomba_traz.rviz" />
+</launch>

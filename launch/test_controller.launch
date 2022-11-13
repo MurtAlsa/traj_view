@@ -1,0 +1,25 @@
+<launch>
+
+    <node pkg="traj_view" type="apriltag_converter.py" name="tagConverter" output="screen"/>
+    
+<!-- green color -->
+    <group ns="roomba20">
+        <node pkg="traj_view" type="send_trajectory.py" args="$(find traj_view)/results/robo0.csv" name="testtraj"  output="screen">
+        <!-- TODO Need to pass the arg as realtime values by publising the from OT.py and send it as a trajectory -->
+        <!-- <node pkg="traj_view" type="send_trajectory.py"  name="testtraj"  output="screen"> -->
+        
+        <!-- <node pkg="traj_view" type="send_trajectory.py" arg="/home/robo/catkin_roomba/src/MDP_BOVO_data/Alice_plan_refine.csv" name="testtraj"  output="screen"> -->
+        <!-- <node pkg="traj_view" type="send_trajectory.py" name="testtraj"  output="screen"> -->
+                <!-- <rosparam param="delay"> 0.0 </rosparam> -->
+        </node>
+        <node pkg="traj_view" type="roomba_controller.py" name="trajController"/>
+    </group>
+
+    <group ns="roomba21">
+        <node pkg="traj_view" type="send_trajectory.py" args="$(find traj_view)/results/robo1.csv" name="testtraj"  output="screen">
+            <!-- <rosparam param="delay"> 10.0 </rosparam> -->
+        </node>
+        <node pkg="traj_view" type="roomba_controller.py" name="trajController"/>
+    </group>
+  
+</launch>

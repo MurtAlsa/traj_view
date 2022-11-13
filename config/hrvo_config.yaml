@@ -1,0 +1,30 @@
+map:
+  img: "config/map/chlorophyll.png"
+  low: 0
+  high: 2
+  topics:
+    viz: "/roomba20/path"
+    field: "/stf/data"
+paths:
+  x0 : [1,1.5,1.5,0,0]
+  y0 : [0, 0, 1, 1, 1.6]
+  x1:  [0, 1.5, 1.5, 0,1]
+  y1:  [1.7, 1.7, 1, 1, 0 ]
+hrvo:
+  dt: 0.05
+  neighbor_dist: 20
+  max_neighbors: 10
+  pref_speed: 0.06
+  max_speed: 0.125
+  radius: 0.345
+controller:
+  dt: 0.01
+  max_vel: 1.5
+  max_yaw_rate: 1.5
+  gain: [0.9, 1.5, 0.3]
+  topics: ["/roomba20/cmd_vel", "/roomba21/cmd_vel"]
+  subs: ["/roomba20/odometry/filtered", "/roomba21/odometery/filtered"]
+
+backup_pid:
+  gain1: [0.9, 1.5, 0.3]
+  gain2: [0.3, 0.5, 0.1]
